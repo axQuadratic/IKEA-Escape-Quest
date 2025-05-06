@@ -14,6 +14,10 @@ config/name="IKEA Escape Quest"
 config/features=PackedStringArray("4.3", "Forward Plus")
 config/icon="res://icon.svg"
 
+[autoload]
+
+MapData="*res://scripts/map-manager/map_data.gd"
+
 [display]
 
 window/size/viewport_width=1280

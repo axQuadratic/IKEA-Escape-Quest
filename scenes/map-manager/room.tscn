@@ -1,29 +1,34 @@
-[gd_scene load_steps=2 format=3 uid="uid://jvb0lna6ynwc"]
+[gd_scene load_steps=4 format=3 uid="uid://jvb0lna6ynwc"]
 
 [ext_resource type="Script" path="res://scripts/map-manager/room.gd" id="1_mmyys"]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mmpnj"]
+size = Vector2(64, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lxoos"]
+size = Vector2(32, 64)
+
 [node name="Room" type="Node2D"]
 script = ExtResource("1_mmyys")
+room_walls = Array[String](["closed", "open", "open", "closed"])
+room_floor = "block"
 
-[node name="Control" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 1280.0
-offset_bottom = 720.0
+[node name="DoorManager" type="Area2D" parent="."]
 
-[node name="RegenerateButton" type="Button" parent="Control"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -48.5
-offset_top = -15.5
-offset_right = 48.5
-offset_bottom = 15.5
-grow_horizontal = 2
-grow_vertical = 2
-text = "Regenerate"
+[node name="TopCollision" type="CollisionShape2D" parent="DoorManager"]
+position = Vector2(640, 16)
+shape = SubResource("RectangleShape2D_mmpnj")
 
-[connection signal="pressed" from="Control/RegenerateButton" to="." method="generate_random_room"]
+[node name="RightCollision" type="CollisionShape2D" parent="DoorManager"]
+position = Vector2(1264, 360)
+shape = SubResource("RectangleShape2D_lxoos")
+
+[node name="BottomCollision" type="CollisionShape2D" parent="DoorManager"]
+position = Vector2(640, 704)
+shape = SubResource("RectangleShape2D_mmpnj")
+
+[node name="LeftCollision" type="CollisionShape2D" parent="DoorManager"]
+position = Vector2(16, 360)
+shape = SubResource("RectangleShape2D_lxoos")
+
+[connection signal="body_entered" from="DoorManager" to="." method="on_door_entered"]
