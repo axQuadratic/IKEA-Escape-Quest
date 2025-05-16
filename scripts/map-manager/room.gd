@@ -1,18 +1,11 @@
 extends Node2D
 
-var wall_types_h: Dictionary = {
-	"closed": preload("res://scenes/map-manager/walls/horizontal_closed.tscn"),
-	"open": preload("res://scenes/map-manager/walls/horizontal_open.tscn")
-}
-
-var wall_types_v: Dictionary = {
-	"closed": preload("res://scenes/map-manager/walls/vertical_closed.tscn"),
-	"open": preload("res://scenes/map-manager/walls/vertical_open.tscn")
-}
 var floors: Array[PackedScene]
 
 @export var room_walls: Array
 @export var room_floor: String
+
+@export var room_enemies: Array[String]
 
 @onready var door_collision_manager: StaticBody2D = get_node("DoorCollisionManager")
 
@@ -31,25 +24,25 @@ func generate_room() -> void:
 
 		door.disabled = false
 		door.visible = true
-		
+
 		wall_index += 1
 
 	# Place walls on all sides
-	var wall_instance = wall_types_h[room_walls[0]].instantiate()
+	var wall_instance = GlobalAssets.wall_types_h[room_walls[0]].instantiate()
 	add_child(wall_instance)
 	move_child(wall_instance, 0)
 
-	wall_instance = wall_types_v[room_walls[1]].instantiate()
+	wall_instance = GlobalAssets.wall_types_v[room_walls[1]].instantiate()
 	add_child(wall_instance)
 	wall_instance.set_global_position(Vector2(get_viewport_rect().size.x - 32, 0))
 	move_child(wall_instance, 0)
 	
-	wall_instance = wall_types_h[room_walls[2]].instantiate()
+	wall_instance = GlobalAssets.wall_types_h[room_walls[2]].instantiate()
 	add_child(wall_instance)
 	wall_instance.set_global_position(Vector2(0, get_viewport_rect().size.y - 32)) # Move to bottom of screen excluding wall width
 	move_child(wall_instance, 0)
 
-	wall_instance = wall_types_v[room_walls[3]].instantiate()
+	wall_instance = GlobalAssets.wall_types_v[room_walls[3]].instantiate()
 	add_child(wall_instance)
 	move_child(wall_instance, 0)
 
@@ -57,6 +50,17 @@ func generate_room() -> void:
 	var floor_instance = load("res://scenes/map-manager/floors/floor_" + room_floor + ".tscn").instantiate()
 	add_child(floor_instance)
 	move_child(floor_instance, 0)
+
+	var enemy_index: int = 0
+	for child in floor_instance.get_children():
+		if not "SpawnPoint" in child.name: continue
+		if enemy_index >= len(room_enemies): break
+
+		var new_enemy = GlobalAssets.enemies[room_enemies[enemy_index]].instantiate()
+		add_child(new_enemy)
+		new_enemy.global_position = child.global_position
+
+		enemy_index += 1
 
 
 func clear_room() -> void:

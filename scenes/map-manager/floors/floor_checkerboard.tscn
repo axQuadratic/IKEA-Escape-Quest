@@ -159,3 +159,24 @@ shape = SubResource("RectangleShape2D_oxqtt")
 [node name="CollisionShape2D12" type="CollisionShape2D" parent="StaticBody2D6"]
 position = Vector2(1056, 0)
 shape = SubResource("RectangleShape2D_oxqtt")
+
+[node name="SpawnPoint" type="Node2D" parent="."]
+position = Vector2(640, 90)
+
+[node name="SpawnPoint2" type="Node2D" parent="."]
+position = Vector2(640, 450)
+
+[node name="SpawnPoint5" type="Node2D" parent="."]
+position = Vector2(640, 270)
+
+[node name="SpawnPoint3" type="Node2D" parent="."]
+position = Vector2(640, 630)
+
+[node name="SpawnPoint7" type="Node2D" parent="."]
+position = Vector2(640, 180)
+
+[node name="SpawnPoint8" type="Node2D" parent="."]
+position = Vector2(640, 360)
+
+[node name="SpawnPoint9" type="Node2D" parent="."]
+position = Vector2(640, 540)

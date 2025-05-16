@@ -10,11 +10,13 @@ class Room:
 	var room_walls: Array
 	var room_floor: String
 	var room_position: Vector2i
+	var room_enemies: Array[String]
 
-	func _init(_room_walls, _room_floor, _room_position) -> void:
+	func _init(_room_walls, _room_floor, _room_position, _room_enemies) -> void:
 		self.room_walls = _room_walls
 		self.room_floor = _room_floor
 		self.room_position = _room_position
+		self.room_enemies = _room_enemies
 
 
 var map_data: Array[Room]
@@ -69,8 +71,14 @@ func generate_map() -> void:
 
 		var new_floor: String = floor_types.pick_random()
 
+		var new_enemies: Array[String]
+
+		var enemy_count: int = randi_range(0, 10)
+		for k in range(enemy_count):
+			new_enemies.append(GlobalAssets.enemies.keys()[randi() % GlobalAssets.enemies.size()])
+
 		# Walls are defined once all rooms are placed
-		map_data.append(Room.new(["closed", "closed", "closed", "closed"], new_floor, new_position))
+		map_data.append(Room.new(["closed", "closed", "closed", "closed"], new_floor, new_position, new_enemies))
 		occupied_positions.append(new_position)
 
 	# Create doors in all shared walls
@@ -109,6 +117,7 @@ func update_position(first_update = false) -> void:
 
 	room.room_walls = current_room.room_walls
 	room.room_floor = current_room.room_floor
+	room.room_enemies = current_room.room_enemies
 
 	if first_update:
 		room.generate_room()

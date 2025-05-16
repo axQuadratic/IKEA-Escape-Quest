@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://jvb0lna6ynwc"]
+[gd_scene load_steps=6 format=3 uid="uid://jvb0lna6ynwc"]
 
 [ext_resource type="Script" path="res://scripts/map-manager/room.gd" id="1_mmyys"]
 [ext_resource type="Texture2D" uid="uid://wbd4f4p66e2v" path="res://icon.svg" id="2_x338x"]
+[ext_resource type="Script" path="res://scripts/enemy-manager/enemy_manager.gd" id="3_kg4kv"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5xnes"]
 size = Vector2(64, 32)
@@ -56,3 +57,6 @@ disabled = true
 [node name="Sprite2D" type="Sprite2D" parent="DoorCollisionManager/LeftCollision"]
 scale = Vector2(0.25, 0.5)
 texture = ExtResource("2_x338x")
+
+[node name="EnemyManager" type="Node2D" parent="."]
+script = ExtResource("3_kg4kv")

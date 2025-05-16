@@ -1,3 +1,33 @@
 [gd_scene format=3 uid="uid://h4b0yxcuomgb"]
 
 [node name="Root" type="Node2D"]
+
+[node name="SpawnPoint" type="Node2D" parent="."]
+position = Vector2(256, 296)
+
+[node name="SpawnPoint5" type="Node2D" parent="."]
+position = Vector2(448, 296)
+
+[node name="SpawnPoint3" type="Node2D" parent="."]
+position = Vector2(1024, 296)
+
+[node name="SpawnPoint6" type="Node2D" parent="."]
+position = Vector2(832, 296)
+
+[node name="SpawnPoint7" type="Node2D" parent="."]
+position = Vector2(640, 296)
+
+[node name="SpawnPoint2" type="Node2D" parent="."]
+position = Vector2(256, 424)
+
+[node name="SpawnPoint8" type="Node2D" parent="."]
+position = Vector2(448, 424)
+
+[node name="SpawnPoint4" type="Node2D" parent="."]
+position = Vector2(1024, 424)
+
+[node name="SpawnPoint9" type="Node2D" parent="."]
+position = Vector2(832, 424)
+
+[node name="SpawnPoint10" type="Node2D" parent="."]
+position = Vector2(640, 424)

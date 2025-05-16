@@ -1,12 +1,10 @@
-extends PanelContainer
+extends GridContainer
 
 var map_icon: PackedScene = preload("res://scenes/map-manager/minimap/map_icon.tscn")
 
-@onready var map_grid: GridContainer = get_node("GridContainer")
-
 
 func update_minimap(map_data: Array, player_current_pos: Vector2i):
-	for icon in map_grid.get_children():
+	for icon in get_children():
 		icon.queue_free()
 
 	var highest_x_pos: int
@@ -21,7 +19,7 @@ func update_minimap(map_data: Array, player_current_pos: Vector2i):
 
 		lowest_y_pos = room.room_position.y
 
-	map_grid.columns = highest_x_pos + 1
+	columns = highest_x_pos + 1
 
 	var room_positions: Array[Vector2i]
 	for room in map_data:
@@ -40,4 +38,4 @@ func update_minimap(map_data: Array, player_current_pos: Vector2i):
 			else:
 				new_icon.color = "#00000000"
 
-			map_grid.add_child(new_icon)
+			add_child(new_icon)

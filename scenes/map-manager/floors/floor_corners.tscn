@@ -25,3 +25,30 @@ shape = SubResource("RectangleShape2D_wuhb1")
 [node name="CollisionShape2D4" type="CollisionShape2D" parent="StaticBody2D"]
 position = Vector2(1024, 464)
 shape = SubResource("RectangleShape2D_wuhb1")
+
+[node name="SpawnPoint" type="Node2D" parent="."]
+position = Vector2(360, 180)
+
+[node name="SpawnPoint2" type="Node2D" parent="."]
+position = Vector2(360, 540)
+
+[node name="SpawnPoint5" type="Node2D" parent="."]
+position = Vector2(360, 360)
+
+[node name="SpawnPoint3" type="Node2D" parent="."]
+position = Vector2(920, 180)
+
+[node name="SpawnPoint6" type="Node2D" parent="."]
+position = Vector2(920, 360)
+
+[node name="SpawnPoint4" type="Node2D" parent="."]
+position = Vector2(920, 540)
+
+[node name="SpawnPoint7" type="Node2D" parent="."]
+position = Vector2(640, 180)
+
+[node name="SpawnPoint8" type="Node2D" parent="."]
+position = Vector2(640, 360)
+
+[node name="SpawnPoint9" type="Node2D" parent="."]
+position = Vector2(640, 540)
