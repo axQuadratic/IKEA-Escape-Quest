@@ -11,39 +11,46 @@ var wall_types_v: Dictionary = {
 }
 var floors: Array[PackedScene]
 
-@export var room_walls: Array[String]
+@export var room_walls: Array
 @export var room_floor: String
 
-
-func _ready() -> void:
-	randomize()
-	generate_room()
+@onready var door_collision_manager: StaticBody2D = get_node("DoorCollisionManager")
 
 
 func generate_room() -> void:
-	# Destroy any current walls
 	for child in get_children():
-		if child is Control: continue
-
+		if child == door_collision_manager: continue
+		
 		child.queue_free()
+
+	var wall_index: int = 0
+	for door in door_collision_manager.get_children():
+		if room_walls[wall_index] != "open":
+			wall_index += 1
+			continue
+
+		door.disabled = false
+		door.visible = true
+		
+		wall_index += 1
 
 	# Place walls on all sides
 	var wall_instance = wall_types_h[room_walls[0]].instantiate()
 	add_child(wall_instance)
 	move_child(wall_instance, 0)
 
-	wall_instance = wall_types_h[room_walls[1]].instantiate()
+	wall_instance = wall_types_v[room_walls[1]].instantiate()
+	add_child(wall_instance)
+	wall_instance.set_global_position(Vector2(get_viewport_rect().size.x - 32, 0))
+	move_child(wall_instance, 0)
+	
+	wall_instance = wall_types_h[room_walls[2]].instantiate()
 	add_child(wall_instance)
 	wall_instance.set_global_position(Vector2(0, get_viewport_rect().size.y - 32)) # Move to bottom of screen excluding wall width
 	move_child(wall_instance, 0)
 
-	wall_instance = wall_types_v[room_walls[2]].instantiate()
-	add_child(wall_instance)
-	move_child(wall_instance, 0)
-
 	wall_instance = wall_types_v[room_walls[3]].instantiate()
 	add_child(wall_instance)
-	wall_instance.set_global_position(Vector2(get_viewport_rect().size.x - 32, 0))
 	move_child(wall_instance, 0)
 
 	# Select a floor
@@ -52,5 +59,9 @@ func generate_room() -> void:
 	move_child(floor_instance, 0)
 
 
-func on_door_entered(body: Node2D) -> void:
-	pass # Replace with function body.
+func clear_room() -> void:
+	# Triggered when all enemies are defeated
+	print("Room cleared!")
+	for door in door_collision_manager.get_children():
+		door.disabled = true
+		door.visible = false

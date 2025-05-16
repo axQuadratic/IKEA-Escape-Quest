@@ -1,34 +1,58 @@
-[gd_scene load_steps=4 format=3 uid="uid://jvb0lna6ynwc"]
+[gd_scene load_steps=5 format=3 uid="uid://jvb0lna6ynwc"]
 
 [ext_resource type="Script" path="res://scripts/map-manager/room.gd" id="1_mmyys"]
+[ext_resource type="Texture2D" uid="uid://wbd4f4p66e2v" path="res://icon.svg" id="2_x338x"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_mmpnj"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5xnes"]
 size = Vector2(64, 32)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_lxoos"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_643t5"]
 size = Vector2(32, 64)
 
 [node name="Room" type="Node2D"]
 script = ExtResource("1_mmyys")
-room_walls = Array[String](["closed", "open", "open", "closed"])
+room_walls = ["closed", "open", "open", "closed"]
 room_floor = "block"
 
-[node name="DoorManager" type="Area2D" parent="."]
+[node name="DoorCollisionManager" type="StaticBody2D" parent="."]
 
-[node name="TopCollision" type="CollisionShape2D" parent="DoorManager"]
+[node name="TopCollision" type="CollisionShape2D" parent="DoorCollisionManager"]
+visible = false
 position = Vector2(640, 16)
-shape = SubResource("RectangleShape2D_mmpnj")
+shape = SubResource("RectangleShape2D_5xnes")
+disabled = true
 
-[node name="RightCollision" type="CollisionShape2D" parent="DoorManager"]
+[node name="Sprite2D" type="Sprite2D" parent="DoorCollisionManager/TopCollision"]
+position = Vector2(2.38419e-05, 2.86102e-06)
+scale = Vector2(0.5, 0.25)
+texture = ExtResource("2_x338x")
+
+[node name="RightCollision" type="CollisionShape2D" parent="DoorCollisionManager"]
+visible = false
 position = Vector2(1264, 360)
-shape = SubResource("RectangleShape2D_lxoos")
+shape = SubResource("RectangleShape2D_643t5")
+disabled = true
 
-[node name="BottomCollision" type="CollisionShape2D" parent="DoorManager"]
+[node name="Sprite2D" type="Sprite2D" parent="DoorCollisionManager/RightCollision"]
+scale = Vector2(0.25, 0.5)
+texture = ExtResource("2_x338x")
+
+[node name="BottomCollision" type="CollisionShape2D" parent="DoorCollisionManager"]
+visible = false
 position = Vector2(640, 704)
-shape = SubResource("RectangleShape2D_mmpnj")
+shape = SubResource("RectangleShape2D_5xnes")
+disabled = true
 
-[node name="LeftCollision" type="CollisionShape2D" parent="DoorManager"]
+[node name="Sprite2D" type="Sprite2D" parent="DoorCollisionManager/BottomCollision"]
+scale = Vector2(0.5, 0.25)
+texture = ExtResource("2_x338x")
+
+[node name="LeftCollision" type="CollisionShape2D" parent="DoorCollisionManager"]
+visible = false
 position = Vector2(16, 360)
-shape = SubResource("RectangleShape2D_lxoos")
+shape = SubResource("RectangleShape2D_643t5")
+disabled = true
 
-[connection signal="body_entered" from="DoorManager" to="." method="on_door_entered"]
+[node name="Sprite2D" type="Sprite2D" parent="DoorCollisionManager/LeftCollision"]
+scale = Vector2(0.25, 0.5)
+texture = ExtResource("2_x338x")

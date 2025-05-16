@@ -18,4 +18,4 @@ func _input(event):
 		print("Mouse Motion at: ", event.position)
 
 	# Print the size of the viewport.
-	print("Viewport Resolution is: ", get_viewport().get_visible_rect().size)
+	#print("Viewport Resolution is: ", get_viewport().get_visible_rect().size)
