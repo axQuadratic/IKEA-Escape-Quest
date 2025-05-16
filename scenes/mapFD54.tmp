@@ -1,0 +1,41 @@
+[gd_scene load_steps=6 format=3 uid="uid://ybed6lxxswyd"]
+
+[ext_resource type="Script" path="res://scripts/map-manager/map.gd" id="1_1yym6"]
+[ext_resource type="PackedScene" uid="uid://be256m1ttfvev" path="res://scenes/player.tscn" id="1_4r1un"]
+[ext_resource type="PackedScene" uid="uid://jvb0lna6ynwc" path="res://scenes/map-manager/room.tscn" id="2_c818s"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mf0yf"]
+size = Vector2(64, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_t6k8k"]
+size = Vector2(32, 64)
+
+[node name="Map" type="Node2D"]
+script = ExtResource("1_1yym6")
+
+[node name="Player" parent="." instance=ExtResource("1_4r1un")]
+position = Vector2(128, 360)
+
+[node name="Room" parent="." instance=ExtResource("2_c818s")]
+room_walls = []
+room_floor = ""
+
+[node name="DoorManager" type="Area2D" parent="."]
+
+[node name="TopCollision" type="CollisionShape2D" parent="DoorManager"]
+position = Vector2(640, 16)
+shape = SubResource("RectangleShape2D_mf0yf")
+
+[node name="RightCollision" type="CollisionShape2D" parent="DoorManager"]
+position = Vector2(1264, 360)
+shape = SubResource("RectangleShape2D_t6k8k")
+
+[node name="BottomCollision" type="CollisionShape2D" parent="DoorManager"]
+position = Vector2(640, 704)
+shape = SubResource("RectangleShape2D_mf0yf")
+
+[node name="LeftCollision" type="CollisionShape2D" parent="DoorManager"]
+position = Vector2(16, 360)
+shape = SubResource("RectangleShape2D_t6k8k")
+
+[connection signal="body_shape_entered" from="DoorManager" to="." method="on_door_entered"]
