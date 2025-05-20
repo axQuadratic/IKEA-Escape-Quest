@@ -11,6 +11,7 @@ func _physics_process(delta):
 	move_and_slide()
 
 func _input(event):
+	return
 	# Mouse in viewport coordinates.
 	if event is InputEventMouseButton:
 		print("Mouse Click/Unclick at: ", event.position)

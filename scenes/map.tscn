@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://scripts/map-manager/map.gd" id="1_1yym6"]
 [ext_resource type="PackedScene" uid="uid://be256m1ttfvev" path="res://scenes/player.tscn" id="1_4r1un"]
 [ext_resource type="PackedScene" uid="uid://jvb0lna6ynwc" path="res://scenes/map-manager/room.tscn" id="2_c818s"]
-[ext_resource type="Script" path="res://scripts/map-manager/minimap/minimap.gd" id="4_welux"]
+[ext_resource type="PackedScene" uid="uid://c4exliespinxy" path="res://scenes/interface.tscn" id="4_odcxl"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mf0yf"]
 size = Vector2(64, 32)
@@ -39,40 +39,6 @@ shape = SubResource("RectangleShape2D_mf0yf")
 position = Vector2(16, 360)
 shape = SubResource("RectangleShape2D_t6k8k")
 
-[node name="Control" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 10
-anchor_right = 1.0
-offset_right = 1280.0
-offset_bottom = 720.0
-grow_horizontal = 2
-
-[node name="MinimapPanel" type="PanelContainer" parent="Control"]
-layout_mode = 0
-offset_left = 964.0
-offset_top = 16.0
-offset_right = 1264.0
-offset_bottom = 166.0
-
-[node name="Minimap" type="GridContainer" parent="Control"]
-layout_mode = 2
-offset_left = 964.0
-offset_top = 32.0
-offset_right = 1248.0
-offset_bottom = 216.0
-script = ExtResource("4_welux")
-
-[node name="Button" type="Button" parent="Control"]
-layout_mode = 1
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_left = 1104.0
-offset_top = -51.0
-offset_right = 1264.0
-offset_bottom = -16.0
-grow_vertical = 0
-text = "Trigger Room Clear"
+[node name="Control" parent="." instance=ExtResource("4_odcxl")]
 
 [connection signal="body_shape_entered" from="DoorManager" to="." method="on_door_entered"]
-[connection signal="pressed" from="Control/Button" to="." method="on_enemy_defeated"]
