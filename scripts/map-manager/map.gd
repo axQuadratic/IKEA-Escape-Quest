@@ -3,7 +3,7 @@ extends Node2D
 
 @onready var player: Node2D = get_node("Player")
 @onready var room: Node2D = get_node("Room")
-@onready var minimap: Control = get_node("Control/Minimap")
+@onready var minimap: Control = get_node("Control/MinimapContainer/MinimapContainerInner/Minimap")
 
 
 class Room:
@@ -11,13 +11,13 @@ class Room:
 	var room_floor: String
 	var room_position: Vector2i
 	var room_enemies: Array[String]
+	var room_cleared: bool = false
 
 	func _init(_room_walls, _room_floor, _room_position, _room_enemies) -> void:
 		self.room_walls = _room_walls
 		self.room_floor = _room_floor
 		self.room_position = _room_position
 		self.room_enemies = _room_enemies
-
 
 var map_data: Array[Room]
 
@@ -31,7 +31,7 @@ func _ready() -> void:
 func generate_map() -> void:
 	randomize()
 
-	var room_count: int = randi_range(10, 20)
+	var room_count: int = randi_range(10, 30)
 
 	var floor_types: Array[String]
 	var floor_dir = DirAccess.open("res://scenes/map-manager/floors/")
@@ -73,7 +73,13 @@ func generate_map() -> void:
 
 		var new_enemies: Array[String]
 
-		var enemy_count: int = randi_range(0, 10)
+		var enemy_count: int
+		match randi_range(0, 1):
+			0:
+				enemy_count = randi_range(1, 10)
+			1:
+				enemy_count = 0
+			
 		for k in range(enemy_count):
 			new_enemies.append(GlobalAssets.enemies.keys()[randi() % GlobalAssets.enemies.size()])
 
@@ -118,6 +124,16 @@ func update_position(first_update = false) -> void:
 	room.room_walls = current_room.room_walls
 	room.room_floor = current_room.room_floor
 	room.room_enemies = current_room.room_enemies
+	room.room_cleared = current_room.room_cleared
+
+	if not room.room_cleared and len(room.room_enemies) == 0:
+		room.room_cleared = true
+		
+		for data_room in map_data:
+			if data_room.room_position != player_current_pos: continue
+
+			data_room.room_cleared = true
+			break
 
 	if first_update:
 		room.generate_room()
@@ -150,3 +166,9 @@ func on_door_entered(_body_rid: RID, body: Node2D, _body_shape_index: int, local
 
 func on_enemy_defeated() -> void:
 	room.call_deferred("clear_room")
+
+	for data_room in map_data:
+		if data_room.room_position != player_current_pos: continue
+
+		data_room.room_cleared = true
+		break

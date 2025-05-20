@@ -1,11 +1,13 @@
 extends Node2D
 
+
 var floors: Array[PackedScene]
 
 @export var room_walls: Array
 @export var room_floor: String
 
 @export var room_enemies: Array[String]
+@export var room_cleared: bool
 
 @onready var door_collision_manager: StaticBody2D = get_node("DoorCollisionManager")
 
@@ -51,6 +53,10 @@ func generate_room() -> void:
 	add_child(floor_instance)
 	move_child(floor_instance, 0)
 
+	if len(room_enemies) == 0 or room_cleared:
+		clear_room()
+		return
+
 	var enemy_index: int = 0
 	for child in floor_instance.get_children():
 		if not "SpawnPoint" in child.name: continue
@@ -65,7 +71,9 @@ func generate_room() -> void:
 
 func clear_room() -> void:
 	# Triggered when all enemies are defeated
-	print("Room cleared!")
+
 	for door in door_collision_manager.get_children():
 		door.disabled = true
 		door.visible = false
+
+	room_cleared = true
