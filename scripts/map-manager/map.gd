@@ -11,6 +11,7 @@ class Room:
 	var room_floor: String
 	var room_position: Vector2i
 	var room_enemies: Array[String]
+	var room_spawn_points: int
 	var room_cleared: bool = false
 
 	func _init(_room_walls, _room_floor, _room_position, _room_enemies) -> void:
@@ -21,7 +22,11 @@ class Room:
 
 var map_data: Array[Room]
 
+var current_room: Room
+
 var player_current_pos: Vector2i = Vector2i(10, 10)
+
+var nav_map: RID
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -74,11 +79,21 @@ func generate_map() -> void:
 		var new_enemies: Array[String]
 
 		var enemy_count: int
-		match randi_range(0, 1):
+		match randi_range(0, 4):
 			0:
-				enemy_count = randi_range(1, 10)
-			1:
 				enemy_count = 0
+			_:
+				enemy_count = randi_range(1, 1)
+
+		match new_floor:
+			"corners":
+				if enemy_count > 9: enemy_count = 9
+
+			"block":
+				if enemy_count > 3: enemy_count = 3
+
+			"checkerboard":
+				if enemy_count > 7: enemy_count = 7
 			
 		for k in range(enemy_count):
 			new_enemies.append(GlobalAssets.enemies.keys()[randi() % GlobalAssets.enemies.size()])
@@ -108,8 +123,6 @@ func generate_map() -> void:
 
 
 func update_position(first_update = false) -> void:
-	var current_room: Room
-
 	for data_room in map_data:
 		if data_room.room_position != player_current_pos: continue
 
@@ -165,6 +178,12 @@ func on_door_entered(_body_rid: RID, body: Node2D, _body_shape_index: int, local
 
 
 func on_enemy_defeated() -> void:
+	current_room.room_enemies.pop_back()
+
+	print("Enemy Defeated!")
+
+	if len(current_room.room_enemies) > 0: return
+
 	room.call_deferred("clear_room")
 
 	for data_room in map_data:
@@ -172,3 +191,14 @@ func on_enemy_defeated() -> void:
 
 		data_room.room_cleared = true
 		break
+
+
+func damage_all_enemies(damage: int) -> void:
+	# Get all enemies in the room
+	print(len(current_room.room_enemies))
+	print(current_room.room_floor)
+
+	for child in get_node("/root/Map/Room").get_children():
+		if !child is CharacterBody2D: continue
+
+		child.enemy_health -= damage

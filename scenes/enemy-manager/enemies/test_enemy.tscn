@@ -7,6 +7,8 @@
 size = Vector2(32, 32)
 
 [node name="Enemy" type="CharacterBody2D"]
+collision_layer = 2
+collision_mask = 20
 script = ExtResource("1_7sjdm")
 enemy_health = 50
 enemy_sprite = ExtResource("2_bm37f")
@@ -15,3 +17,6 @@ enemy_sprite = ExtResource("2_bm37f")
 shape = SubResource("RectangleShape2D_xox1r")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+avoidance_enabled = true
