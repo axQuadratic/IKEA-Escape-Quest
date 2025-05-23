@@ -1,7 +1,10 @@
-[gd_scene load_steps=4 format=3 uid="uid://blu1twdwacxhi"]
+[gd_scene load_steps=5 format=3 uid="uid://spqioi24ie42"]
 
-[ext_resource type="Script" path="res://scripts/enemy.gd" id="1_7sjdm"]
+[ext_resource type="Script" path="res://scripts/enemy.gd" id="1_jwn5g"]
 [ext_resource type="Texture2D" uid="uid://t4nb8dlfmybo" path="res://icon_red.png" id="2_bm37f"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_d064m"]
+size = Vector2(32, 32)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xox1r"]
 size = Vector2(32, 32)
@@ -9,14 +12,23 @@ size = Vector2(32, 32)
 [node name="Enemy" type="CharacterBody2D"]
 collision_layer = 2
 collision_mask = 20
-script = ExtResource("1_7sjdm")
+script = ExtResource("1_jwn5g")
 enemy_health = 50
 enemy_sprite = ExtResource("2_bm37f")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("RectangleShape2D_xox1r")
+shape = SubResource("RectangleShape2D_d064m")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
 avoidance_enabled = true
+
+[node name="Hurtbox" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 12
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+shape = SubResource("RectangleShape2D_xox1r")
+
+[connection signal="area_entered" from="Hurtbox" to="." method="on_bullet_hit"]

@@ -44,3 +44,8 @@ func _process(delta: float) -> void:
 
 		AIType.NONE:
 			pass
+
+
+func on_bullet_hit(bullet: Area2D) -> void:
+	print("here")
+	enemy_health -= bullet.bullet_damage

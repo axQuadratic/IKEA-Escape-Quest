@@ -1,6 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://xotsdm52ulcm"]
+[gd_scene load_steps=4 format=3 uid="uid://xotsdm52ulcm"]
 
 [ext_resource type="Script" path="res://scripts/enemy.gd" id="1_8sqnp"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_d064m"]
+size = Vector2(32, 32)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xox1r"]
 size = Vector2(32, 32)
@@ -11,9 +14,18 @@ collision_mask = 20
 script = ExtResource("1_8sqnp")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("RectangleShape2D_xox1r")
+shape = SubResource("RectangleShape2D_d064m")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
 avoidance_enabled = true
+
+[node name="Hurtbox" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 12
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+shape = SubResource("RectangleShape2D_xox1r")
+
+[connection signal="area_entered" from="Hurtbox" to="." method="on_bullet_hit"]

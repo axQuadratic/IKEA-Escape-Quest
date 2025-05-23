@@ -83,7 +83,7 @@ func generate_map() -> void:
 			0:
 				enemy_count = 0
 			_:
-				enemy_count = randi_range(1, 1)
+				enemy_count = randi_range(1, 10)
 
 		match new_floor:
 			"corners":

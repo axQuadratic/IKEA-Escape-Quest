@@ -1,7 +1,7 @@
 extends CharacterBody2D
 
 @export var speed = 400
-@export var bullet : PackedScene
+@export var bullet : PackedScene = preload("res://scenes/bullet.tscn")
 
 func movement():
 	var input_direction = Input.get_vector("left", "right", "up", "down")
