@@ -8,7 +8,11 @@ var icon_svg: CompressedTexture2D = preload("res://icon.svg")
 func _ready() -> void:
 	# Iterate through all collision in the scene and place an icon.svg matching each of it
 	for body in get_children():
+		if body is NavigationRegion2D: continue
+
 		for shape in body.get_children():
+			if shape is NavigationObstacle2D: continue
+			
 			var new_sprite: Sprite2D = Sprite2D.new()
 
 			new_sprite.texture = icon_svg
