@@ -1,5 +1,9 @@
 extends CharacterBody2D
 
+
+signal player_hit
+
+
 @export var speed = 400
 @export var bullet : PackedScene = preload("res://scenes/bullet.tscn")
 @export var health = 6
@@ -18,6 +22,7 @@ var footstep_timer: float
 
 func _ready() -> void:
 	foot_audio_player.stream = foot_1_audio
+	connect("player_hit", get_parent().on_player_hit)
 
 func movement():
 	var input_direction = Input.get_vector("left", "right", "up", "down")
@@ -74,3 +79,5 @@ func on_hit(area: Area2D) -> void:
 	sprite.modulate = "ffffff80"
 	
 	print(health)
+
+	emit_signal("player_hit")

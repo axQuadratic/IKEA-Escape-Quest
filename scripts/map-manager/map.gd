@@ -4,6 +4,7 @@ extends Node2D
 @onready var player: Node2D = get_node("Player")
 @onready var room: Node2D = get_node("Room")
 @onready var minimap: Control = get_node("Control/MinimapContainer/MinimapContainerInner/Minimap")
+@onready var health_bar: ProgressBar = get_node("Control/HealthBar")
 @onready var global_sfx_player: AudioStreamPlayer = get_node("GlobalSFXPlayer")
 
 var door_open_audio = preload("res://assets/audio/door_open.mp3")
@@ -216,3 +217,6 @@ func damage_all_enemies(damage: int) -> void:
 		if !child is CharacterBody2D: continue
 
 		child.enemy_health -= damage
+
+func on_player_hit() -> void:
+	health_bar.value += 1
