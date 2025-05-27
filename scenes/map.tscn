@@ -50,4 +50,7 @@ shape = SubResource("RectangleShape2D_t6k8k")
 position = Vector2(-929, 140)
 navigation_polygon = SubResource("NavigationPolygon_pp1wb")
 
+[node name="GlobalSFXPlayer" type="AudioStreamPlayer" parent="."]
+volume_db = -7.0
+
 [connection signal="body_shape_entered" from="DoorManager" to="." method="on_door_entered"]
