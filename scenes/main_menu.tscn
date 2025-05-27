@@ -1,0 +1,55 @@
+[gd_scene load_steps=3 format=3 uid="uid://w4a6v3c8j6op"]
+
+[ext_resource type="Script" path="res://scripts/main_menu.gd" id="1_8elfg"]
+[ext_resource type="Texture2D" uid="uid://devcoyc88dj77" path="res://assets/menu.png" id="1_iv8rh"]
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_8elfg")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_iv8rh")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.1
+anchor_right = 0.5
+anchor_bottom = 0.1
+offset_left = -71.5
+offset_right = 71.5
+offset_bottom = 23.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 100
+text = "IKEA Escape Quest"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.3
+anchor_top = 0.8
+anchor_right = 0.7
+anchor_bottom = 0.9
+offset_left = -4.0
+offset_top = -4.0
+offset_right = 4.0
+offset_bottom = 4.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "START"
+
+[connection signal="pressed" from="Button" to="." method="on_start"]

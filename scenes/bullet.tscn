@@ -1,9 +1,11 @@
-[gd_scene load_steps=4 format=3 uid="uid://d154a88h2jnki"]
+[gd_scene load_steps=5 format=3 uid="uid://d154a88h2jnki"]
 
 [ext_resource type="Texture2D" uid="uid://w7dok238qi2o" path="res://Bullet.png" id="1_man18"]
 [ext_resource type="Script" path="res://scripts/bullet.gd" id="1_vx67y"]
+[ext_resource type="AudioStream" uid="uid://3peu0bg1wl16" path="res://assets/audio/bullet_impact.mp3" id="3_6uahd"]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_s3vmv"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1vyvh"]
+size = Vector2(18, 10)
 
 [node name="Area2D" type="Area2D"]
 collision_layer = 4
@@ -15,6 +17,11 @@ rotation = 1.5708
 texture = ExtResource("1_man18")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("CapsuleShape2D_s3vmv")
+position = Vector2(18, 0)
+shape = SubResource("RectangleShape2D_1vyvh")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_6uahd")
+volume_db = -10.0
 
 [connection signal="body_entered" from="." to="." method="on_collision"]

@@ -4,6 +4,11 @@ extends Node2D
 @onready var player: Node2D = get_node("Player")
 @onready var room: Node2D = get_node("Room")
 @onready var minimap: Control = get_node("Control/MinimapContainer/MinimapContainerInner/Minimap")
+@onready var global_sfx_player: AudioStreamPlayer = get_node("GlobalSFXPlayer")
+
+var door_open_audio = preload("res://assets/audio/door_open.mp3")
+var door_close_audio = preload("res://assets/audio/door_close.mp3")
+var enemy_death_audio = preload("res://assets/audio/enemy_death.mp3")
 
 
 class Room:
@@ -176,15 +181,24 @@ func on_door_entered(_body_rid: RID, body: Node2D, _body_shape_index: int, local
 
 	update_position()
 
+	if current_room.room_cleared: return
+
+	global_sfx_player.stream = door_close_audio
+	global_sfx_player.play()
+
 
 func on_enemy_defeated() -> void:
 	current_room.room_enemies.pop_back()
 
-	print("Enemy Defeated!")
+	global_sfx_player.stream = enemy_death_audio
+	global_sfx_player.play()
 
 	if len(current_room.room_enemies) > 0: return
 
 	room.call_deferred("clear_room")
+
+	global_sfx_player.stream = door_open_audio
+	global_sfx_player.play()
 
 	for data_room in map_data:
 		if data_room.room_position != player_current_pos: continue

@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scripts/map-manager/minimap/minimap.gd" id="1_8g3hi"]
 [ext_resource type="Script" path="res://scripts/interface/trigger_room_clear_button.gd" id="2_cpb4y"]
-[ext_resource type="AudioStream" uid="uid://d0qt7mw4q2n81" path="res://assets/Elevator Music.mp3" id="3_wq052"]
+[ext_resource type="AudioStream" uid="uid://d0qt7mw4q2n81" path="res://assets/audio/Elevator Music.mp3" id="3_wq052"]
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -43,6 +43,8 @@ grow_vertical = 0
 text = "Trigger Room Clear"
 script = ExtResource("2_cpb4y")
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+[node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_wq052")
 autoplay = true
+
+[node name="AdditionalAmbiencePlayer" type="AudioStreamPlayer" parent="."]

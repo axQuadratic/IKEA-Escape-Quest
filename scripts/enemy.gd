@@ -14,6 +14,9 @@ enum AIType { CHARGE, NONE }
 @onready var shape: CollisionShape2D = get_node("CollisionShape2D")
 @onready var sprite: Sprite2D = get_node("Sprite2D")
 @onready var agent: NavigationAgent2D = get_node("NavigationAgent2D")
+@onready var audio_player: AudioStreamPlayer = get_node("AudioStreamPlayer")
+
+var spawn_timer: float = 0.5
 
 
 func _ready() -> void:
@@ -26,6 +29,10 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
+	if spawn_timer > 0:
+		spawn_timer -= delta
+		return
+
 	# Check for 0 HP
 	if enemy_health <= 0:
 		emit_signal("defeated")
@@ -47,5 +54,5 @@ func _process(delta: float) -> void:
 
 
 func on_bullet_hit(bullet: Area2D) -> void:
-	print("here")
+	if spawn_timer > 0: return
 	enemy_health -= bullet.bullet_damage
